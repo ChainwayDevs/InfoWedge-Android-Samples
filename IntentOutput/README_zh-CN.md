@@ -6,7 +6,7 @@
 
 ## 演示环境
 
-- InfoWedge - v1.46
+- InfoWedge - v1.48
 - 设备 - MC62
 
 ## 概述
@@ -14,9 +14,7 @@
 本示例演示了应用程序如何通过 Android Intent 来接收扫码结果。操作步骤如下：
 
 1. 配置 InfoWedge 的 Profile0 ，打开 Intent 输出功能。
-
-<img src="./pics/1.png" alt="1.png" width="180" height="300" style="border: 1px solid gray;">
-<img src="./pics/2.png" alt="2.png" width="180" height="300" style="border: 1px solid gray;">
+![1.png](./pics/1.png) ![2.png](./pics/2.png)
 
 2. 运行示例应用程序，扫描条码。应用程序将显示以下信息：
    - 扫码结果
@@ -25,8 +23,7 @@
    - 条码类型
    - 扫码时长
 
-<img src="./pics/3.png" alt="3.png" width="180" height="300" style="border: 1px solid gray;">
-<img src="./pics/overview.png" alt="overview.png" width="180" height="300" style="border: 1px solid gray;">
+    ![3.png](./pics/3.png) ![overview.png](./pics/overview.png)
 
 ## 示例代码说明
 

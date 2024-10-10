@@ -12,8 +12,7 @@
 ## 概述
 此示例应用程序演示了如何开始使用 InfoWedge API 进行编程。运行示例应用程序并点击 `GET INFO` 按钮以获取有关 InfoWedge 的一些信息。
 
-<img src="./pics/1.png" alt="1.png" width="180" height="300" style="border: 1px solid gray;">
-<img src="./pics/overview.png" alt="overview.png" width="180" height="300" style="border: 1px solid gray;">
+![1.png](./pics/1.png) ![overview.png](./pics/overview.png)
 
 ## 示例代码说明
 

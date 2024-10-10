@@ -6,7 +6,7 @@
 
 ## Demonstration Environment
 
-- InfoWedge - v1.46
+- InfoWedge - v1.48
 - Device - MC62
 
 ## Overview
@@ -14,19 +14,16 @@
 This example demonstrates how an application receives scan results via Android Intent. The steps are as follows:
 
 1. Configure InfoWedge's Profile0 and enable the Intent output feature.
-
-<img src="./pics/1.png" alt="1.png" width="180" height="300" style="border: 1px solid gray;">
-<img src="./pics/2.png" alt="2.png" width="180" height="300" style="border: 1px solid gray;">
+![1.png](./pics/1.png) ![2.png](./pics/2.png)
 
 2. Run the sample application and scan a barcode. The application will display the following information:
-- Scan result
-- Barcode data
-- Raw data
-- Barcode symbology
-- Decode time
+    - Scan result
+    - Barcode data
+    - Raw data
+    - Barcode symbology
+    - Decode time
 
-<img src="./pics/3.png" alt="3.png" width="180" height="300" style="border: 1px solid gray;">
-<img src="./pics/overview.png" alt="overview.png" width="180" height="300" style="border: 1px solid gray;">
+    ![3.png](./pics/3.png) ![overview.png](./pics/overview.png)
 
 ## Sample code walk-through
 
