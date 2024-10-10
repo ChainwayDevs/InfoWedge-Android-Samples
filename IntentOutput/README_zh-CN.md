@@ -26,7 +26,7 @@
    - 扫码时长
 
 <img src="./pics/3.png" alt="3.png" width="180" height="300" style="border: 1px solid gray;">
-<img src="./pics/4.png" alt="4.png" width="180" height="300" style="border: 1px solid gray;">
+<img src="./pics/overview.png" alt="overview.png" width="180" height="300" style="border: 1px solid gray;">
 
 ## 示例代码说明
 
