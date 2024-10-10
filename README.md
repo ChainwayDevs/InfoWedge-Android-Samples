@@ -8,7 +8,9 @@
 This repository contains the following sample applications:
 
 - **[IntentOutput](IntentOutput/README.md):** demonstrates how an application can receive scan results via Android Intent.
-![overview.png](IntentOutput/pics/overview.png)
+
+    ![overview.png](IntentOutput/pics/overview.png)
 
 - **[HelloInfoWedge](HelloInfoWedge/README.md):** demonstrates how to start programming with the InfoWedge APIs.
-![overview.png](HelloInfoWedge/pics/overview.png)
+
+    ![overview.png](HelloInfoWedge/pics/overview.png)

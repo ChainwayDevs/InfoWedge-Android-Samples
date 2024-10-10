@@ -14,7 +14,8 @@
 本示例演示了应用程序如何通过 Android Intent 来接收扫码结果。操作步骤如下：
 
 1. 配置 InfoWedge 的 Profile0 ，打开 Intent 输出功能。
-![1.png](./pics/1.png) ![2.png](./pics/2.png)
+
+    ![1.png](./pics/1.png) ![2.png](./pics/2.png)
 
 2. 运行示例应用程序，扫描条码。应用程序将显示以下信息：
    - 扫码结果
