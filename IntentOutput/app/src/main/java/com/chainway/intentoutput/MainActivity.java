@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // Extract the source of the data
+        // Extract the data of the scan result
         sb.append("[scan data]\n").append(intent.getStringExtra("data_string")).append("\n\n");
 
         // Extract the raw data from the intent

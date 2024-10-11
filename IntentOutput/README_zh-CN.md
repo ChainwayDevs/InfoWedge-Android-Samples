@@ -34,7 +34,7 @@
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Register for the intent sent by InfoWedge
+        // 注册 InfoWedge 发送的 intent
         IntentFilter filter = new IntentFilter();
         filter.addCategory(Intent.CATEGORY_DEFAULT);
         filter.addAction("com.infowedge.data");
@@ -49,18 +49,18 @@
             String action = intent.getAction();
             Bundle bundle = intent.getExtras();
 
-            // output the contents of the intent to the log
+            // 将 intent 的内容输出到日志
             for (String key : bundle.keySet()) {
                 Log.v(TAG, key + " : " + bundle.get(key));
             }
 
             if (action.equals("com.infowedge.data")) {
-                //  Received a barcode scan
+                // 收到条码扫描结果
                 try {
-                    // Update the text view on the screen with the data received
+                    // 使用接收到的数据更新屏幕上的文本信息
                     displayScanResult(intent);
                 } catch (Exception e) {
-                    //  Catch if the UI does not exist when we receive the broadcast
+                    // 捕获在接收广播时 UI 不存在的情况
                 }
             }
         }
@@ -72,7 +72,7 @@
         final TextView lblScanData = (TextView) findViewById(R.id.lblScanData);
         StringBuilder sb = new StringBuilder();
 
-        // Extract the result of the scan
+        // 提取扫描结果
         int result = intent.getIntExtra("result", -1);
         switch (result) {
             case 1:
@@ -87,21 +87,21 @@
         }
 
         if (result != 1) {
-            // Update the text view on the screen with the data received
+            // 使用接收到的数据更新屏幕上的文本信息
             lblScanData.setText(sb.toString());
             return;
         }
 
-        // Extract the source of the data
+        // 提取扫码数据
         sb.append("[scan data]\n").append(intent.getStringExtra("data_string")).append("\n\n");
 
-        // Extract the raw data from the intent
+        // 从 intent 中提取原始数据
         byte[] decode_data = intent.getByteArrayExtra("decode_data");
         if (decode_data != null) {
             sb.append("[raw data]\n").append(new String(decode_data)).append("\n\n");
         }
 
-        // Extract the symbology of the barcode
+        // 提取条码类型
         int symbol = intent.getIntExtra("symbology", -1);
         if (symbol == -1) {
             sb.append("[symbology]\nunknown\n\n");
@@ -110,10 +110,10 @@
                     .append(" (").append(symbol).append(")").append("\n\n");
         }
 
-        // Extract the time it took to decode the barcode
+        // 提取解码所花费的时间
         sb.append("[decode time]\n").append(intent.getIntExtra("decode_time", -1)).append(" ms\n\n");
 
-        // Update the text view on the screen with the data received
+        // 使用接收到的数据更新屏幕上的文本信息
         lblScanData.setText(sb.toString());
     }
     ```

@@ -14,3 +14,8 @@ This repository contains the following sample applications:
 - **[HelloInfoWedge](HelloInfoWedge/README.md):** demonstrates how to start programming with the InfoWedge APIs.
 
     ![overview.png](HelloInfoWedge/pics/overview.png)
+
+- **[InfoWedgeControl](InfoWedgeControl/README.md):** demonstrates how to use the InfoWedge APIs to control the barcode scanner on Chainway devices.
+    
+    ![overview.png](InfoWedgeControl/pics/overview.png)
+    

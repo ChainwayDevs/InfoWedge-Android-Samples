@@ -9,7 +9,12 @@
 - **[IntentOutput](IntentOutput/README_zh-CN.md)：** 演示了应用程序如何通过 Android Intent 接收扫描结果。
 
     ![overview.png](IntentOutput/pics/overview.png)
-    
+
 - **[HelloInfoWedge](HelloInfoWedge/README_zh-CN.md)：** 演示了如何开始使用 InfoWedge API 进行编程。
 
     ![overview.png](HelloInfoWedge/pics/overview.png)
+
+- **[InfoWedgeControl](InfoWedgeControl/README_zh-CN.md)：** 演示了如何使用 InfoWedge API 控制成为设备上的扫码器。
+    
+    ![overview.png](InfoWedgeControl/pics/overview.png)
+    

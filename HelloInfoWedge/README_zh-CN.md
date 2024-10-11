@@ -18,7 +18,7 @@
 
 1. **注册广播接收器并过滤结果。** 这是在示例应用程序的 `onCreate()` 方法中完成的：
     ```java
-    // Register broadcast receiver and filter results
+    // 注册广播接收器并过滤结果
     IntentFilter filter = new IntentFilter();
     filter.addAction("com.symbol.infowedge.api.RESULT_ACTION");
     filter.addCategory("android.intent.category.DEFAULT");
@@ -28,17 +28,17 @@
     ```java
     Button btnGetInfo = findViewById(R.id.button_get_info);
     btnGetInfo.setOnClickListener(v -> {
-        // Send multiple intents as extras to get different information
+        // 发送多个 intents 作为 extras 以获取不同的信息
         Intent i = new Intent();
         i.setAction("com.symbol.infowedge.api.ACTION");
 
-        // Gets the version number of InfoWedge currently installed on the device
+        // 获取设备上当前安装的 InfoWedge 的版本号
         i.putExtra("com.symbol.infowedge.api.GET_VERSION_INFO", "");
 
-        // Gets the status of InfoWedge as "enabled" or "disabled" as a string extra
+        // 获取 InfoWedge 的状态（"enabled" 或 "disabled"）作为字符串 extra
         i.putExtra("com.symbol.infowedge.api.GET_INFOWEDGE_STATUS", "");
 
-        // Gets the name of the Profile currently in use by InfoWedge
+        // 获取 InfoWedge 当前使用的配置文件的名称
         i.putExtra("com.symbol.infowedge.api.GET_ACTIVE_PROFILE", "");
 
         sendBroadcast(i);
@@ -51,7 +51,7 @@
         public void onReceive(Context context, Intent intent) {
             StringBuilder sb = new StringBuilder();
 
-            // Version number of InfoWedge
+            // InfoWedge 的版本号
             if (intent.hasExtra("com.symbol.infowedge.api.RESULT_GET_VERSION_INFO")) {
                 Bundle res = intent.getBundleExtra("com.symbol.infowedge.api.RESULT_GET_VERSION_INFO");
                 String infoWedgeVersion = res.getString("INFOWEDGE");
@@ -59,14 +59,14 @@
                 Log.d(TAG, "version: " + infoWedgeVersion);
             }
 
-            // The name of the Profile currently in use
+            // 当前使用的配置文件名称
             if (intent.hasExtra("com.symbol.infowedge.api.RESULT_GET_ACTIVE_PROFILE")) {
                 String activeProfile = intent.getStringExtra("com.symbol.infowedge.api.RESULT_GET_ACTIVE_PROFILE");
                 sb.append("profile:\t").append(activeProfile).append("\n");
                 Log.d(TAG, "profile: " + activeProfile);
             }
 
-            // The status of InfoWedge
+            // InfoWedge 的状态
             if (intent.hasExtra("com.symbol.infowedge.api.RESULT_GET_INFOWEDGE_STATUS")) {
                 // status: "ENABLED" or "DISABLED"
                 String infoWedgeStatus = intent.getStringExtra("com.symbol.infowedge.api.RESULT_GET_INFOWEDGE_STATUS");
