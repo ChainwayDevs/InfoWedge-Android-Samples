@@ -19,3 +19,6 @@ This repository contains the following sample applications:
     
     ![overview.png](InfoWedgeControl/pics/overview.png)
     
+- **[ConfigProfileDemo](ConfigProfileDemo/README.md):** demonstrates how to configure the InfoWedge profile using the InfoWedge APIs.
+    
+    ![overview.png](ConfigProfileDemo/pics/overview.png)
