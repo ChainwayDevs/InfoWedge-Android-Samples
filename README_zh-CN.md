@@ -18,3 +18,5 @@
     
     ![overview.png](InfoWedgeControl/pics/overview.png)
     
+- **[ConfigProfileDemo](ConfigProfileDemo/README_zh-CN.md)：** 演示了如何使用 API 修改 InfoWedge 配置文件。
+    ![overview.png](ConfigProfileDemo/pics/overview.png)
