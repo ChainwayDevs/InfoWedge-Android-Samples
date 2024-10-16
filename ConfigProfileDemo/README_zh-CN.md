@@ -586,7 +586,7 @@ private void setBarcode() {
 
 #### 设置解码器参数
 
-设置配置中的解码器参数。
+设置配置中的解码器参数。解码器的名称和参数可以在 [Zebra 解码器](./docs/zebra_decoders.md)、[Newland 解码器](./docs/newland_decoders.md) 中找到。
 
 ```java
 private void setDecoder() {

@@ -583,7 +583,7 @@ private void setBarcode() {
 
 #### Set the decoder parameters
 
-Set the decoder parameters of the profile.
+Set the decoder parameters of the profile. The decoder's name and parameters can be found in the [Zebra Decoders](./docs/zebra_decoders.md) or [Newland Decoders](./docs/newland_decoders.md).
 
 ```java
 private void setDecoder() {
