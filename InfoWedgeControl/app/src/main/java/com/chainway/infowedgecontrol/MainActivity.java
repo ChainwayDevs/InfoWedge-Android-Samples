@@ -72,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
         // Toggle the scan
         Intent i = new Intent();
         i.setAction("com.symbol.infowedge.api.ACTION");
-        i.putExtra("com.symbol.infowedge.api.SOFT_TRIGGER", "TOGGLE"); // START, STOP, TOGGLE
+        i.putExtra("com.symbol.infowedge.api.SOFT_SCAN_TRIGGER", "TOGGLE"); // START, STOP, TOGGLE
         i.putExtra("SEND_RESULT", "true");
-        i.putExtra("COMMAND_IDENTIFIER", "SOFT_TRIGGER");
+        i.putExtra("COMMAND_IDENTIFIER", "SOFT_SCAN_TRIGGER");
         sendBroadcast(i);
     }
 

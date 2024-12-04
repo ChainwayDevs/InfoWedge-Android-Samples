@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">RfidDemo</string>
+
+    <string-array name="tag_output_mode_items">
+        <item>Continuous (Single Tag)</item>
+        <item>Continuous (Timed)</item>
+        <item>One-time Output</item>
+        <item>RSSI first</item>
+    </string-array>
+
+    <string-array name="tag_output_format_items">
+        <item>EPC</item>
+        <item>EPC,RSSI</item>
+        <item>PC:EPC</item>
+        <item>TID[0,6],EPC[4,8],USER[0,2]</item>
+    </string-array>
+
+    <string-array name="antenna_transmit_power">
+        <item>5 dBm</item>
+        <item>6 dBm</item>
+        <item>7 dBm</item>
+        <item>8 dBm</item>
+        <item>9 dBm</item>
+        <item>10 dBm</item>
+        <item>11 dBm</item>
+        <item>12 dBm</item>
+        <item>13 dBm</item>
+        <item>14 dBm</item>
+        <item>15 dBm</item>
+        <item>16 dBm</item>
+        <item>17 dBm</item>
+        <item>18 dBm</item>
+        <item>19 dBm</item>
+        <item>20 dBm</item>
+        <item>21 dBm</item>
+        <item>22 dBm</item>
+        <item>23 dBm</item>
+        <item>24 dBm</item>
+        <item>25 dBm</item>
+        <item>26 dBm</item>
+        <item>27 dBm</item>
+        <item>28 dBm</item>
+        <item>29 dBm</item>
+        <item>30 dBm</item>
+    </string-array>
+</resources>

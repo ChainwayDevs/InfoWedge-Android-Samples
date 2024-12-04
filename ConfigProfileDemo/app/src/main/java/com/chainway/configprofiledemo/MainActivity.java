@@ -450,6 +450,7 @@ public class MainActivity extends AppCompatActivity {
         bParams.putString("success_audio_type", "1");   // success audio prompt: 0 - None, 1 - Du, 2 - Di
         bParams.putString("failure_audio", "true");     // play audio on failure
         bParams.putString("vibrate", "true");           // vibration on success
+        bParams.putString("barcode_trigger_keys", "");  // trigger keys (comma separated)
         bParams.putString("barcode_trigger_mode", "2"); // key trigger mode: 0 - Press and Release, 1 - Press and Continue, 2 - Trigger, 3 - Timed Release
         bParams.putString("charset_name", "UTF-8");     // character set name: Auto，UTF-8，GBK，GB18030，ISO-8859-1，Shift_JIS
 
