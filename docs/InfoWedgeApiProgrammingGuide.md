@@ -1,46 +1,54 @@
 # InfoWedge API Programming Guide
 
-> v1.5, 2024-11-27
+> v1.6, 2024-12-04
 
 ## Table of Contents
 
 - [Overview](#overview)
-- [Send Intent](#send-intent)
-- [Receive Results](#receive-results)
-- [Single Broadcast, Multiple Commands](#single-broadcast-multiple-commands)
-- [Receive Command Execution Results](#receive-command-execution-results)
-- [InfoWedge API List](#infowedge-api-list)
+    - [Example Code](#example-code)
+    - [Send Intent](#send-intent)
+    - [Receive Results](#receive-results)
+    - [Single Broadcast, Multiple Commands](#single-broadcast-multiple-commands)
+    - [Receive Command Execution Results](#receive-command-execution-results)
+    - [InfoWedge API List](#infowedge-api-list)
 - [Query Interfaces](#query-interfaces)
-  - [Get Version Info](#get-version-info)
-  - [Get Active Profile](#get-active-profile)
-  - [Get InfoWedge Status](#get-infowedge-status)
+    - [Get Version Info](#get-version-info)
+    - [Get Active Profile](#get-active-profile)
+    - [Get InfoWedge Status](#get-infowedge-status)
 - [Configuration Interfaces](#configuration-interfaces)
     - [Create Profile](#create-profile)
     - [Delete Profile](#delete-profile)
     - [Restore Config](#restore-config)
     - [Set Config](#set-config)
         - [Set Main Parameters](#set-main-parameters)
-        - [Set Floating Scan Parameters](#set-floating-scan-parameters)
-        - [Set Scanner Parameters](#set-scanner-parameters)
+        - [Set DCP Parameters](#set-dcp-parameters)
+        - [Set Barcode Parameters](#set-barcode-parameters)
         - [Set RFID Parameters](#set-rfid-parameters)
-        - [Set GS1 Barcode Formatting Parameters](#set-gs1-barcode-formatting-parameters)
+        - [Set GS1 Formatting Parameters](#set-gs1-formatting-parameters)
         - [Set Basic Data Formatting (BDF) Parameters](#set-basic-data-formatting-bdf-parameters)
         - [Set Keystroke Output Parameters](#set-keystroke-output-parameters)
-        - [Set Broadcast Output Parameters](#set-broadcast-output-parameters)
+        - [Set Intent Output Parameters](#set-intent-output-parameters)
         - [Set IP Output Parameters](#set-ip-output-parameters)
         - [Set Clipboard Output Parameters](#set-clipboard-output-parameters)
         - [Set Multiple Modules](#set-multiple-modules)
 - [Operation Interfaces](#operation-interfaces)
-    - [Enable/Disable InfoWedge](#enable-disable-infowedge)
-    - [Trigger Scanner Scan](#trigger-scanner-scan)
-    - [Trigger RFID Scan](#trigger-rfid-scan)
-- [Scanner Settings API Naming](#scanner-settings-api-naming)
+    - [Enable or Disable InfoWedge](#enable-or-disable-infowedge)
+    - [Soft Scan Trigger](#soft-scan-trigger)
+    - [Soft RFID Trigger](#soft-rfid-trigger)
+- [Barcode Settings API Naming](#barcode-settings-api-naming)
 
 ---
 
 ## Overview
 
 InfoWedge API mainly operates through Android's Intent - specific commands that other applications can use to control InfoWedge without directly accessing InfoWedge's UI.
+
+### Example Code
+
+Example code can be found in the following repositories:
+
+- [GitHub](https://github.com/ChainwayDevs/InfoWedge-Android-Samples.git)
+- [Gitee](https://gitee.com/chainwaydevs/InfoWedge-Android-Samples.git)
 
 ### Send Intent
 
@@ -186,14 +194,14 @@ private BroadcastReceiver resultBroadcastReceiver = new BroadcastReceiver() {
 | Configuration Interfaces | Create Profile        | CREATE_PROFILE               | Create a default profile          |
 |                      | Delete Profile           | DELETE_PROFILE               | Delete one or more profiles       |
 |                      | Restore Config           | RESTORE_CONFIG               | Restore configuration to factory settings |
-|                      | Set Config               | SET_CONFIG                   | Set the content of a profile      |
+|                      | Set Config               | SET_CONFIG                   | Set the configurations of a profile      |
 | Operation Interfaces | Enable/Disable InfoWedge | ENABLE_INFOWEDGE             | Enable or disable the InfoWedge service |
 |                      | Trigger Scanner Scan     | SOFT_SCAN_TRIGGER            | Start/Stop/Toggle scanner scanning |
 |                      | Trigger RFID Scan        | SOFT_RFID_TRIGGER            | Start/Stop/Toggle RFID scanning    |
 
 ## Query Interfaces
 
-### Get Version Info (Get Version Info)
+### Get Version Info
 
 ```java
 // Send broadcast
@@ -216,7 +224,7 @@ private BroadcastReceiver resultBroadcastReceiver = new BroadcastReceiver() {
 };
 ```
 
-### Get Active Profile (Get Active Profile)
+### Get Active Profile
 
 ```java
 // Send broadcast
@@ -238,7 +246,7 @@ private BroadcastReceiver resultBroadcastReceiver = new BroadcastReceiver() {
 };
 ```
 
-### Get InfoWedge Status (Get InfoWedge Status)
+### Get InfoWedge Status
 
 ```java
 // Send broadcast
@@ -382,7 +390,7 @@ sendBroadcast(i);
 - **BUTTON** - Button mode
 - **BUTTON_ONLY** - Button-only mode
 
-#### Set barcode Parameters
+#### Set Barcode Parameters
 
 ```java
 // Main parameters
@@ -529,7 +537,7 @@ Additionally, you can output partial content, for example, if the format is set 
 
 Note: When outputting `USER` memory bank content, you must specify the byte range, i.e., the `USER` field must use the `USER[m,n]` format.
 
-#### Set GS1 Barcode Formatting Parameters
+#### Set GS1 Formatting Parameters
 
 ```java
 // Main parameters
@@ -630,7 +638,7 @@ i.putExtra("com.symbol.infowedge.api.SET_CONFIG", bMain);
 sendBroadcast(i);
 ```
 
-#### Set Broadcast Output Parameters
+#### Set Intent Output Parameters
 
 ```java
 // Main parameters
@@ -802,7 +810,7 @@ sendBroadcast(i);
 
 ## Operation Interfaces
 
-### Enable/Disable InfoWedge (Enable/Disable InfoWedge)
+### Enable or Disable InfoWedge
 
 ```java
 // Send broadcast

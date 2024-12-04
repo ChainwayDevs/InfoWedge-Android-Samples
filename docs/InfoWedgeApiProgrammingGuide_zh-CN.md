@@ -1,19 +1,20 @@
 # InfoWedgeAPI 编程指南
 
-> v1.5, 2024-11-27
+> v1.6, 2024-12-04
 
 ## 目录
 
 - [概述](#概述)
-- [发送 Intent](#发送-intent)
-- [接收结果](#接收结果)
-- [单个广播多条命令](#单个广播多条命令)
-- [接收命令执行结果](#接收命令执行结果)
-- [InfoWedge API 列表](#infowedge-api-列表)
+    - [示例代码](#示例代码)
+    - [发送 Intent](#发送-intent)
+    - [接收结果](#接收结果)
+    - [单个广播多条命令](#单个广播多条命令)
+    - [接收命令执行结果](#接收命令执行结果)
+    - [InfoWedge API 列表](#infowedge-api-列表)
 - [查询接口](#查询接口)
-  - [获取版本信息（Get Version Info）](#获取版本信息get-version-info)
-  - [获取活跃配置（Get Active Profile）](#获取活跃配置get-active-profile)
-  - [获取 InfoWedge 状态（Get InfoWedge Status）](#获取-infowedge-状态get-infowedge-status)
+    - [获取版本信息（Get Version Info）](#获取版本信息get-version-info)
+    - [获取活跃配置（Get Active Profile）](#获取活跃配置get-active-profile)
+    - [获取 InfoWedge 状态（Get InfoWedge Status）](#获取-infowedge-状态get-infowedge-status)
 - [配置接口](#配置接口)
     - [创建配置（Create Profile）](#创建配置create-profile)
     - [删除配置（Delete Profile）](#删除配置delete-profile)
@@ -41,6 +42,13 @@
 ## 概述
 
 InfoWedge API 主要通过 Android 的 Intent 运行 - 其他应用程序可以使用的特定命令来控制 InfoWedge，而无需直接访问 InfoWedge 的 UI 页面。
+
+### 示例代码
+
+示例代码可在以下仓库获得：
+
+- [GitHub](https://github.com/ChainwayDevs/InfoWedge-Android-Samples.git)
+- [Gitee](https://gitee.com/chainwaydevs/InfoWedge-Android-Samples.git)
 
 ### 发送 Intent
 
