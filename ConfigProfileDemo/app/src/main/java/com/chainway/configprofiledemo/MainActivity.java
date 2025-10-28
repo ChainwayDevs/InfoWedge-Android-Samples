@@ -261,6 +261,9 @@ public class MainActivity extends AppCompatActivity {
         bParams.putString("bdf_delete_start", "1");     // delete leading characters count
         bParams.putString("bdf_delete_end", "2");       // delete trailing characters count
         bParams.putString("bdf_delete_string", "DEL");  // delete specified string
+        bParams.putString("bdf_resolve_escape_sequence", "true");   // Resolve escape sequence
+        bParams.putString("bdf_resolve_escape_tag_string", "true"); // Resolve tag string
+        bParams.putString("bdf_case_conversion", "2");    // Case conversion, 0-Keep original case, 1-Convert to uppercase, 2-Convert to lowercase
 
         // add the parameters to the configuration
         bConfig.putBundle("PARAM_LIST", bParams);
@@ -298,6 +301,11 @@ public class MainActivity extends AppCompatActivity {
         Bundle bParams = new Bundle();
         bParams.putString("keystroke_output_enabled", "true");  // enable keystroke output
         bParams.putString("keystroke_output_type", "2");        // set keystroke type: 0 - Append on cursor, 1 - Simulate keystroke, 2 - Replace on cursor
+        bParams.putString("keystroke_send_enter_as_events", "true");    // Enable/disable sending Enter key as events
+        bParams.putString("keystroke_send_tab_as_events", "true");      // Enable/disable sending Tab key as events
+        bParams.putString("keystroke_send_control_chars_as_events", "true");   // Enable/disable sending control chars as events
+        bParams.putString("keystroke_process_key_tag", "true");         // Enable/disable processing key tags
+        bParams.putString("keystroke_special_key_event_delay", "200");  // Set special key event delay (ms)
 
         // add the parameters to the configuration
         bConfig.putBundle("PARAM_LIST", bParams);
