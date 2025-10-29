@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permission required for foreground service on Android 9.0+ -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,15 +15,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IntentOutput"
         tools:targetApi="31">
+        <!-- IMPORTANT: singleTop ensures onNewIntent() is called when activity is already running,
+             preventing multiple instances and allowing proper handling of scan data -->
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleTop"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- Intent filter for InfoWedge Start Activity delivery -->
+            <intent-filter>
+                <action android:name="com.infowedge.data" />
+                <!-- DEFAULT category is REQUIRED for implicit intents to work -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
+
+        <!-- Service for receiving scan data from InfoWedge via Start Service or Start Foreground Service delivery -->
+        <service
+            android:name=".ScanDataService"
+            android:exported="true"
+            android:foregroundServiceType="dataSync">
+            <intent-filter>
+                <action android:name="com.infowedge.data" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

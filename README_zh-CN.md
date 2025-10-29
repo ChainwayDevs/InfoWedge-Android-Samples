@@ -1,4 +1,4 @@
-# Infowedge 编程示例
+# InfoWedge 编程示例
 
 > 该仓库包含示例应用程序，演示如何使用成为 InfoWedge 与 成为设备上的扫码器进行交互。
 

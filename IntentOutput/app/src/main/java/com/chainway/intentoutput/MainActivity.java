@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -18,17 +19,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Handle the initial intent when activity is first created
+        displayScanResult(getIntent(), "via Activity (onCreate)");
+
         // Register for the intent sent by InfoWedge
         IntentFilter filter = new IntentFilter();
         filter.addCategory(Intent.CATEGORY_DEFAULT);
         filter.addAction("com.infowedge.data");
-        registerReceiver(myBroadcastReceiver, filter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(myBroadcastReceiver, filter, Context.RECEIVER_EXPORTED);
+        } else {
+            registerReceiver(myBroadcastReceiver, filter);
+        }
+
+        // Register for broadcasts from ScanDataService
+        IntentFilter serviceFilter = new IntentFilter();
+        serviceFilter.addAction(ScanDataService.ACTION_DISPLAY_SCAN_DATA);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(serviceDataReceiver, serviceFilter, Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            registerReceiver(serviceDataReceiver, serviceFilter);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        // Handle new intent when activity is reused (due to singleTop launch mode)
+        setIntent(intent);  // Update the current intent
+        displayScanResult(intent, "via Activity (onNewIntent)");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(myBroadcastReceiver);
+        unregisterReceiver(serviceDataReceiver);
     }
 
     private BroadcastReceiver myBroadcastReceiver = new BroadcastReceiver() {
@@ -46,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 //  Received a barcode scan
                 try {
                     // Update the text view on the screen with the data received
-                    displayScanResult(intent);
+                    displayScanResult(intent, "via Broadcast");
                 } catch (Exception e) {
                     //  Catch if the UI does not exist when we receive the broadcast
                 }
@@ -54,9 +80,50 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private void displayScanResult(Intent intent) {
+    // Receiver for data forwarded from ScanDataService
+    private BroadcastReceiver serviceDataReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            
+            if (ScanDataService.ACTION_DISPLAY_SCAN_DATA.equals(action)) {
+                Log.d(TAG, "Received scan data from ScanDataService");
+                
+                // Get the delivery method indicator
+                String receivedVia = intent.getStringExtra("received_via");
+                
+                try {
+                    // Display the scan result on UI
+                    displayScanResult(intent, "via Service (forwarded to Activity)");
+                } catch (Exception e) {
+                    Log.e(TAG, "Error displaying scan result from service", e);
+                }
+            }
+        }
+    };
+
+    private void displayScanResult(Intent intent, String howDataReceived) {
+        if (intent == null) {
+            return;
+        }
+        
+        // Check if this is a valid scan data intent
+        String action = intent.getAction();
+        if (action == null) {
+            return;
+        }
+        
+        // Accept data from InfoWedge directly or forwarded from ScanDataService
+        if (!action.equals("com.infowedge.data") && 
+            !action.equals(ScanDataService.ACTION_DISPLAY_SCAN_DATA)) {
+            return;
+        }
+
         final TextView lblScanData = (TextView) findViewById(R.id.lblScanData);
         StringBuilder sb = new StringBuilder();
+
+        // How the data was received
+        sb.append("[how data received]\n").append(howDataReceived).append("\n\n");
 
         // Extract the result of the scan
         int result = intent.getIntExtra("result", -1);

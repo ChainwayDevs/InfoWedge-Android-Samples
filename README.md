@@ -1,4 +1,4 @@
-# Infowedge Sample Applications
+# InfoWedge Sample Applications
 
 > This repository contains sample applications that demonstrate how to use the Chainway InfoWedge to interact with the barcode scanner on Chainway devices.
 
