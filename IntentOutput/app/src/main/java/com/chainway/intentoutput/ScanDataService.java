@@ -121,6 +121,10 @@ public class ScanDataService extends Service {
         displayIntent.putExtra("original_action", originalIntent.getAction());
         displayIntent.putExtra("received_via", "Service");
         
+        // IMPORTANT: Set package name for Android 13+ (API 33+)
+        // This makes it an explicit broadcast, which is required for RECEIVER_NOT_EXPORTED
+        displayIntent.setPackage(getPackageName());
+        
         // Send broadcast to MainActivity
         sendBroadcast(displayIntent);
         

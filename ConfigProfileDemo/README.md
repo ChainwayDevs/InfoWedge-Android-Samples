@@ -46,9 +46,13 @@ This sample application demonstrates how to configure the InfoWedge profile usin
     ```java
     // Register broadcast receiver and filter results
     IntentFilter filter = new IntentFilter();
-    filter.addAction("com.symbol.datawedge.api.RESULT_ACTION");
+    filter.addAction("com.symbol.infowedge.api.RESULT_ACTION");
     filter.addCategory("android.intent.category.DEFAULT");
-    registerReceiver(resultBroadcastReceiver, filter);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        registerReceiver(resultBroadcastReceiver, filter, Context.RECEIVER_EXPORTED);
+    } else {
+        registerReceiver(resultBroadcastReceiver, filter);
+    }
     ```
 2. **Process the button click event.** This is done in the `onCreate()` method of the sample application:
     ```java
@@ -334,6 +338,9 @@ private void setConfigBdf() {
     bParams.putString("bdf_delete_start", "1");     // delete leading characters count
     bParams.putString("bdf_delete_end", "2");       // delete trailing characters count
     bParams.putString("bdf_delete_string", "DEL");  // delete specified string
+    bParams.putString("bdf_resolve_escape_sequence", "true");   // Resolve escape sequence
+    bParams.putString("bdf_resolve_escape_tag_string", "true"); // Resolve tag string
+    bParams.putString("bdf_case_conversion", "2");  // Case conversion, 0-Keep original case, 1-Convert to uppercase, 2-Convert to lowercase
 
     // add the parameters to the configuration
     bConfig.putBundle("PARAM_LIST", bParams);
@@ -380,6 +387,11 @@ private void setKeystrokeOutput() {
     Bundle bParams = new Bundle();
     bParams.putString("keystroke_output_enabled", "true");  // enable keystroke output
     bParams.putString("keystroke_output_type", "2");        // set keystroke type: 0 - Append on cursor, 1 - Simulate keystroke, 2 - Replace on cursor
+    bParams.putString("keystroke_send_enter_as_events", "true");    // Enable/disable sending Enter key as events
+    bParams.putString("keystroke_send_tab_as_events", "true");      // Enable/disable sending Tab key as events
+    bParams.putString("keystroke_send_control_chars_as_events", "true");   // Enable/disable sending control chars as events
+    bParams.putString("keystroke_process_key_tag", "true");         // Enable/disable processing key tags
+    bParams.putString("keystroke_special_key_event_delay", "200");  // Set special key event delay (ms)
 
     // add the parameters to the configuration
     bConfig.putBundle("PARAM_LIST", bParams);
@@ -425,6 +437,9 @@ private void setIntentOutput() {
     bParams.putString("intent_output_enabled", "true");         // enable intent output
     bParams.putString("intent_action", "com.infowedge.action"); // set the intent action
     bParams.putString("intent_data", "data");                   // set the intent data output name
+    bParams.putString("intent_category", "com.infowedge.category");         // Set intent category
+    bParams.putString("intent_package_name", "com.chainway.intentoutput");  // Set intent package name, multiple package names separated by commas
+    bParams.putString("intent_delivery", "3");   // Set intent delivery, 0-Broadcast, 1-Start Activity, 2-Start Service, 3-Start Foreground Service
 
     // add the parameters to the configuration
     bConfig.putBundle("PARAM_LIST", bParams);

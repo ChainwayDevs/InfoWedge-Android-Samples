@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -38,7 +39,11 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.symbol.infowedge.api.RESULT_ACTION");
         filter.addCategory("android.intent.category.DEFAULT");
-        registerReceiver(resultBroadcastReceiver, filter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(resultBroadcastReceiver, filter, Context.RECEIVER_EXPORTED);
+        } else {
+            registerReceiver(resultBroadcastReceiver, filter);
+        }
     }
 
     // open InfoWedge app

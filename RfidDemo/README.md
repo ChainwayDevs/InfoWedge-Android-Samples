@@ -33,7 +33,11 @@ This sample application demonstrates how to configure the InfoWedge profile's RF
     IntentFilter filter = new IntentFilter();
     filter.addAction("com.symbol.infowedge.api.RESULT_ACTION");
     filter.addCategory("android.intent.category.DEFAULT");
-    registerReceiver(resultBroadcastReceiver, filter);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        registerReceiver(resultBroadcastReceiver, filter, Context.RECEIVER_EXPORTED);
+    } else {
+        registerReceiver(resultBroadcastReceiver, filter);
+    }
     ```
 2. **Process the button click event.** This is done in the `onCreate()` method of the sample application:
     ```java

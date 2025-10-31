@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -45,7 +46,11 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.symbol.infowedge.api.RESULT_ACTION");
         filter.addCategory("android.intent.category.DEFAULT");
-        registerReceiver(resultBroadcastReceiver, filter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(resultBroadcastReceiver, filter, Context.RECEIVER_EXPORTED);
+        } else {
+            registerReceiver(resultBroadcastReceiver, filter);
+        }
     }
 
     @Override
@@ -344,6 +349,9 @@ public class MainActivity extends AppCompatActivity {
         bParams.putString("intent_output_enabled", "true");         // enable intent output
         bParams.putString("intent_action", "com.infowedge.action"); // set the intent action
         bParams.putString("intent_data", "data");                   // set the intent data output name
+        bParams.putString("intent_category", "com.infowedge.category");         // Set intent category
+        bParams.putString("intent_package_name", "com.chainway.intentoutput");  // Set intent package name
+        bParams.putString("intent_delivery", "3");   // Set intent delivery, 0-Broadcast, 1-Start Activity, 2-Start Service, 3-Start Foreground Service
 
         // add the parameters to the configuration
         bConfig.putBundle("PARAM_LIST", bParams);

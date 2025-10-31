@@ -6,7 +6,7 @@
 
 ## 演示环境
 
-- InfoWedge - v1.49
+- InfoWedge - v1.71
 - 设备 - MC62
 - 扫描头 - SE4710
 
@@ -25,6 +25,7 @@
 4. **设置配置文件参数**
     - [点击 MAIN 按钮设置主要配置。](#设置主要配置)
     - [点击 DCP 按钮设置 DCP 参数。](#设置-dcp-参数)
+    - [点击 GS1 按钮设置 GS1 参数。](#设置-gs1-参数)
     - [点击 BDF 按钮设置 BDF 参数。](#设置-bdf-参数)
 5. **设置输出配置**
     - [点击 KEY 按钮设置按键输出参数。](#设置按键输出参数)
@@ -45,9 +46,13 @@
     ```java
     // 注册广播接收器并过滤结果
     IntentFilter filter = new IntentFilter();
-    filter.addAction("com.symbol.datawedge.api.RESULT_ACTION");
+    filter.addAction("com.symbol.infowedge.api.RESULT_ACTION");
     filter.addCategory("android.intent.category.DEFAULT");
-    registerReceiver(resultBroadcastReceiver, filter);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        registerReceiver(resultBroadcastReceiver, filter, Context.RECEIVER_EXPORTED);
+    } else {
+        registerReceiver(resultBroadcastReceiver, filter);
+    }
     ```
 2. **处理按钮点击事件。** 这是在示例应用程序的 `onCreate()` 方法中完成的：
     ```java
@@ -333,6 +338,9 @@ private void setConfigBdf() {
     bParams.putString("bdf_delete_start", "1");     // 删除起始字符数
     bParams.putString("bdf_delete_end", "2");       // 删除结束字符数
     bParams.putString("bdf_delete_string", "DEL");  // 删除内容
+    bParams.putString("bdf_resolve_escape_sequence", "true");   // 解析转义字符
+    bParams.putString("bdf_resolve_escape_tag_string", "true"); // 解析标签字符串
+    bParams.putString("bdf_case_conversion", "2");    // 大小写转换, 0-大小写保持不变, 1-全部转成大写, 2-全部转成小写
 
     // 将参数添加到配置中
     bConfig.putBundle("PARAM_LIST", bParams);
@@ -379,6 +387,11 @@ private void setKeystrokeOutput() {
     Bundle bParams = new Bundle();
     bParams.putString("keystroke_output_enabled", "true");  // 启用按键输出
     bParams.putString("keystroke_output_type", "2");        // 设置按键输出方式: 0 - 输出至光标位置，1 - 模拟键盘输出，2 - 输出并覆盖光标位置
+    bParams.putString("keystroke_send_enter_as_events", "true");    // 启用/禁用将 Enter 键作为事件发送
+    bParams.putString("keystroke_send_tab_as_events", "true");      // 启用/禁用将 Tab 键作为事件发送
+    bParams.putString("keystroke_send_control_chars_as_events", "true");   // 启用/禁用将控制字符作为事件发送
+    bParams.putString("keystroke_process_key_tag", "true");         // 启用/禁用处理标签按键
+    bParams.putString("keystroke_special_key_event_delay", "200");  // 设置特殊键事件延迟 (毫秒)
 
     // 将参数添加到配置中
     bConfig.putBundle("PARAM_LIST", bParams);
@@ -421,9 +434,12 @@ private void setIntentOutput() {
 
     // 设置 Intent 参数（如果使用默认值，则无需设置）
     Bundle bParams = new Bundle();
-    bParams.putString("intent_output_enabled", "true");         // 启用广播输出
-    bParams.putString("intent_action", "com.infowedge.action"); // 设置广播名称
+    bParams.putString("intent_output_enabled", "true");         // 启用 intent 输出
+    bParams.putString("intent_action", "com.infowedge.action"); // 设置 intent 操作名称
     bParams.putString("intent_data", "data");                   // 设置数据名称
+    bParams.putString("intent_category", "com.infowedge.category");         // 设置 intent 类别
+    bParams.putString("intent_package_name", "com.chainway.intentoutput");  // 设置 intent 包名称，多个包名称用逗号分隔
+    bParams.putString("intent_delivery", "3");   // 设置 intent 发送方式, 0-广播, 1-启动 Activity, 2-启动 Service, 3-启动前台 Service
 
     // 将参数添加到配置中
     bConfig.putBundle("PARAM_LIST", bParams);

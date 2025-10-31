@@ -28,7 +28,11 @@
     IntentFilter filter = new IntentFilter();
     filter.addAction("com.symbol.infowedge.api.RESULT_ACTION");
     filter.addCategory("android.intent.category.DEFAULT");
-    registerReceiver(resultBroadcastReceiver, filter);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        registerReceiver(resultBroadcastReceiver, filter, Context.RECEIVER_EXPORTED);
+    } else {
+        registerReceiver(resultBroadcastReceiver, filter);
+    }
     ```
 2. **处理按钮点击事件。** 这是在示例应用程序的 `onCreate()` 方法中完成的：
     ```java
