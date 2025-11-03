@@ -579,6 +579,19 @@ private void setBarcode() {
     bParams.putString("vibrate", "true");           // vibration on success
     bParams.putString("barcode_trigger_mode", "2"); // key trigger mode: 0 - Press and Release, 1 - Press and Continue, 2 - Trigger, 3 - Timed Release
     bParams.putString("charset_name", "UTF-8");     // character set name: Auto，UTF-8，GBK，GB18030，ISO-8859-1，Shift_JIS
+    bParams.putString("same_barcode_timeout", "1000"); // Same barcode timeout (ms)
+    // Enable/Disable decoders
+    bParams.putString("decoder_code11", "true");    // Enable Code11 decoder
+    bParams.putString("decoder_code128", "false");  // Disable Code128 decoder
+    // Enable/Disable/Restore default for all decoders
+    // bParams.putString("decoder_all_symbology", "true");      // Enable all decoders
+    // bParams.putString("decoder_all_symbology", "false");     // Disable all decoders
+    // bParams.putString("decoder_all_symbology", "default");   // Restore default settings for all decoders
+    // Set decoder parameters
+    bParams.putString("decoder_code128_length1", "1");  // Set Code128 decoder length 1
+    bParams.putString("decoder_code128_length2", "40"); // Set Code128 decoder length 2
+    bParams.putString("decoder_upca_report_check_digit", "true");   // Transmit UPC-A Check Digit
+    bParams.putString("decoder_ean13_report_check_digit", "true");  // Transmit EAN-13 Check Digit
 
     // add the parameters to the configuration
     bConfig.putBundle("PARAM_LIST", bParams);

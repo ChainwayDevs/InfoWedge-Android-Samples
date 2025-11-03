@@ -1,6 +1,6 @@
 # InfoWedgeAPI 编程指南
 
-> v1.6, 2024-12-04
+> v1.7, 2025-11-03
 
 ## 目录
 
@@ -72,7 +72,11 @@ void registerReceivers() {
     IntentFilter filter = new IntentFilter();
     filter.addAction("com.symbol.infowedge.api.RESULT_ACTION");
     filter.addCategory("android.intent.category.DEFAULT");
-    registerReceiver(resultBroadcastReceiver, filter);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        registerReceiver(resultBroadcastReceiver, filter, Context.RECEIVER_EXPORTED);
+    } else {
+        registerReceiver(resultBroadcastReceiver, filter);
+    }
 }
 
 // 接收命令结果的广播接收器
@@ -410,6 +414,7 @@ bParams.putString("barcode_enabled", "true");   // 是否启用扫码头
 bParams.putString("barcode_trigger_keys", "LEFT_TRIGGER,CENTER_TRIGGER,RIGHT_TRIGGER");  // 触发扫码的按键，多个按键用逗号分隔
 bParams.putString("barcode_trigger_mode", "0");   // 按键触发模式：0单次扫码，1连续扫码，2按住扫码，3瞄准扫码
 bParams.putString("charset_name", "Auto");   // 解码使用的数据集：Auto，UTF-8，GBK，GB18030，ISO-8859-1，Shift_JIS
+bParams.putString("same_barcode_timeout", "1000"); // 相同条码超时时间 (ms)
 bParams.putString("success_audio_type", "2"); // 扫码成功时播放提示音 Di
 bParams.putString("failure_audio", "false"); // 扫码失败时播放提示音
 bParams.putString("vibrate", "false"); // 扫码成功时是否震动提示
@@ -596,6 +601,9 @@ bParams.putString("bdf_send_enter", "true"); // 是否发送 ENTER 键
 bParams.putString("bdf_delete_start", "1"); // 删除起始字符数
 bParams.putString("bdf_delete_end", "2");    // 删除结束字符数
 bParams.putString("bdf_delete_string", "DEL");  // 删除内容
+bParams.putString("bdf_resolve_escape_sequence", "true");   // 是否解析转义字符
+bParams.putString("bdf_resolve_escape_tag_string", "true"); // 是否解析标签字符串
+bParams.putString("bdf_case_conversion", "2");    // 设置大小写转换，0保持不变，1全部大写，2全部小写
 
 // 添加到主参数设置中
 bConfig.putBundle("PARAM_LIST", bParams);
@@ -626,6 +634,11 @@ bConfig.putString("RESET_CONFIG", "true"); // 重置原有按键输出配置
 Bundle bParams = new Bundle();
 bParams.putString("keystroke_output_enabled", "true");   // 是否启用按键输出
 bParams.putString("keystroke_output_type", "0");   // 设置按键输出类型，0输出到光标位置，1模拟按键，2覆盖光标位置
+bParams.putString("keystroke_send_enter_as_events", "true");   // 是否启用将 Enter 键作为事件发送
+bParams.putString("keystroke_send_tab_as_events", "true");   // 是否启用将 Tab 键作为事件发送
+bParams.putString("keystroke_send_control_chars_as_events", "true");   // 是否启用将控制字符作为事件发送
+bParams.putString("keystroke_process_key_tag", "true");   // 是否启用处理标签按键
+bParams.putString("keystroke_special_key_event_delay", "100");   // 设置特殊按键事件延时 (毫秒)
 
 // 添加到主参数设置中
 bConfig.putBundle("PARAM_LIST", bParams);
@@ -638,7 +651,7 @@ i.putExtra("com.symbol.infowedge.api.SET_CONFIG", bMain);
 sendBroadcast(i);
 ```
 
-#### 设置广播输出参数
+#### 设置 Intent 输出参数
 
 ```java
 // 主参数设置
@@ -650,13 +663,16 @@ bMain.putString("CONFIG_MODE", "UPDATE");   // 将配置合并到已有的配置
 // 设置 Intent 输出
 Bundle bConfig = new Bundle();
 bConfig.putString("PLUGIN_NAME", "INTENT");    // 设置类型：INTENT
-bConfig.putString("RESET_CONFIG", "true"); // 重置原有广播输出配置
+bConfig.putString("RESET_CONFIG", "true"); // 重置原有 Intent 配置
 
-// 设置 INTENT 参数（若使用默认值的配置项，可不设置）
+// 设置 Intent 参数（若使用默认值的配置项，可不设置）
 Bundle bParams = new Bundle();
-bParams.putString("intent_output_enabled", "true");   // 是否启用广播输出
-bParams.putString("intent_action", "com.infowedge.data");   // 设置广播输出的 action
-bParams.putString("intent_data", "data_string");   // 设置广播输出的数据名称
+bParams.putString("intent_output_enabled", "true");   // 是否启用 Intent 输出
+bParams.putString("intent_action", "com.infowedge.data");   // 设置 Intent 操作名称
+bParams.putString("intent_data", "data_string");   // 设置 Intent 输出的数据名称
+bParams.putString("intent_category", "com.infowedge.category");   // 设置 Intent 类型
+bParams.putString("intent_package_name", "com.chainway.intentoutput");   // 设置 Intent 包名称
+bParams.putString("intent_delivery", "3");   // 设置 Intent 发送方式, 0-广播, 1-启动 Activity, 2-启动 Service, 3-启动前台 Service
 
 // 添加到主参数设置中
 bConfig.putBundle("PARAM_LIST", bParams);

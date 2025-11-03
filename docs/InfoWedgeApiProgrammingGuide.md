@@ -1,6 +1,6 @@
 # InfoWedge API Programming Guide
 
-> v1.6, 2024-12-04
+> v1.7, 2025-11-03
 
 ## Table of Contents
 
@@ -72,7 +72,11 @@ void registerReceivers() {
     IntentFilter filter = new IntentFilter();
     filter.addAction("com.symbol.infowedge.api.RESULT_ACTION");
     filter.addCategory("android.intent.category.DEFAULT");
-    registerReceiver(resultBroadcastReceiver, filter);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        registerReceiver(resultBroadcastReceiver, filter, Context.RECEIVER_EXPORTED);
+    } else {
+        registerReceiver(resultBroadcastReceiver, filter);
+    }
 }
 
 // Broadcast receiver for receiving command results
@@ -410,6 +414,7 @@ bParams.putString("barcode_enabled", "true");   // Enable barcode
 bParams.putString("barcode_trigger_keys", "LEFT_TRIGGER,CENTER_TRIGGER,RIGHT_TRIGGER");  // Trigger keys for scanning, multiple keys separated by commas
 bParams.putString("barcode_trigger_mode", "0");   // Trigger mode: 0-Press and Release, 1-Press and Continue, 2-Trigger, 3-Timed Release
 bParams.putString("charset_name", "Auto");   // Charset for decoding: Auto, UTF-8, GBK, GB18030, ISO-8859-1, Shift_JIS
+bParams.putString("same_barcode_timeout", "1000"); // Same barcode timeout (ms)
 bParams.putString("success_audio_type", "2"); // Play beep sound on successful scan
 bParams.putString("failure_audio", "false"); // Play beep sound on failed scan
 bParams.putString("vibrate", "false"); // Vibrate on successful scan
@@ -596,6 +601,9 @@ bParams.putString("bdf_send_enter", "true"); // Send ENTER key
 bParams.putString("bdf_delete_start", "1"); // Delete leading characters
 bParams.putString("bdf_delete_end", "2");    // Delete trailing characters
 bParams.putString("bdf_delete_string", "DEL");  // Delete specified string
+bParams.putString("bdf_resolve_escape_sequence", "true");   // Resolve escape sequence
+bParams.putString("bdf_resolve_escape_tag_string", "true"); // Resolve tag string
+bParams.putString("bdf_case_conversion", "2");    // Case conversion, 0-Keep original case, 1-Convert to uppercase, 2-Convert to lowercase
 
 // Add to main parameters
 bConfig.putBundle("PARAM_LIST", bParams);
@@ -626,6 +634,11 @@ bConfig.putString("RESET_CONFIG", "true"); // Reset existing keystroke output co
 Bundle bParams = new Bundle();
 bParams.putString("keystroke_output_enabled", "true");   // Enable keystroke output
 bParams.putString("keystroke_output_type", "0");   // Set keystroke output type, 0-Append on cursor, 1-Simulate keystroke, 2-Replace on cursor
+bParams.putString("keystroke_send_enter_as_events", "true");   // Enable/disable sending Enter key as events
+bParams.putString("keystroke_send_tab_as_events", "true");   // Enable/disable sending Tab key as events
+bParams.putString("keystroke_send_control_chars_as_events", "true");   // Enable/disable sending control chars as events
+bParams.putString("keystroke_process_key_tag", "true");   // Enable/disable processing key tags
+bParams.putString("keystroke_special_key_event_delay", "100");   // Set special key event delay (ms)
 
 // Add to main parameters
 bConfig.putBundle("PARAM_LIST", bParams);
@@ -657,6 +670,9 @@ Bundle bParams = new Bundle();
 bParams.putString("intent_output_enabled", "true");   // Enable broadcast output
 bParams.putString("intent_action", "com.infowedge.data");   // Set intent action
 bParams.putString("intent_data", "data_string");   // Set data output name
+bParams.putString("intent_category", "com.infowedge.category");   // Set intent category
+bParams.putString("intent_package_name", "com.chainway.intentoutput");   // Set intent package name
+bParams.putString("intent_delivery", "3");   // Set intent delivery, 0-Broadcast, 1-Start Activity, 2-Start Service, 3-Start Foreground Service
 
 // Add to main parameters
 bConfig.putBundle("PARAM_LIST", bParams);

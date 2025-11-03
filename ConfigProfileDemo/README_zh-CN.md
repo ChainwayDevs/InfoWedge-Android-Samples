@@ -579,6 +579,19 @@ private void setBarcode() {
     bParams.putString("vibrate", "true");           // 扫描振动提示
     bParams.putString("barcode_trigger_mode", "2"); // 按键触发模式：0 - 单次扫码，1 - 连续扫码，2 - 按住扫码，3 - 瞄准扫码
     bParams.putString("charset_name", "UTF-8");     // 字符集：Auto，UTF-8，GBK，GB18030，ISO-8859-1，Shift_JIS
+    bParams.putString("same_barcode_timeout", "1000"); // 相同条码超时时间 (ms)
+    // Enable/Disable decoders
+    bParams.putString("decoder_code11", "true");    // 启用 Code11 解码器
+    bParams.putString("decoder_code128", "false");  // 禁用 Code128 解码器
+    // Enable/Disable/Restore default for all decoders
+    // bParams.putString("decoder_all_symbology", "true");      // 启用所有解码器
+    // bParams.putString("decoder_all_symbology", "false");     // 禁用所有解码器
+    // bParams.putString("decoder_all_symbology", "default");   // 恢复所有解码器为默认设置
+    // 设置解码器参数
+    bParams.putString("decoder_code128_length1", "1");  // 设置 Code128 解码器长度 1
+    bParams.putString("decoder_code128_length2", "40"); // 设置 Code128 解码器长度 2
+    bParams.putString("decoder_upca_report_check_digit", "true");   // 传输 UPC-A 校验位
+    bParams.putString("decoder_ean13_report_check_digit", "true");  // 传输 EAN-13 校验位
 
     // 将参数添加到配置中
     bConfig.putBundle("PARAM_LIST", bParams);
