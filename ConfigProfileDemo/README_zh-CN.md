@@ -392,6 +392,7 @@ private void setKeystrokeOutput() {
     bParams.putString("keystroke_send_control_chars_as_events", "true");   // 启用/禁用将控制字符作为事件发送
     bParams.putString("keystroke_process_key_tag", "true");         // 启用/禁用处理标签按键
     bParams.putString("keystroke_special_key_event_delay", "200");  // 设置特殊键事件延迟 (毫秒)
+    bParams.putString("keystroke_character_delay", "100");          // 设置字符间延迟 (毫秒)
 
     // 将参数添加到配置中
     bConfig.putBundle("PARAM_LIST", bParams);

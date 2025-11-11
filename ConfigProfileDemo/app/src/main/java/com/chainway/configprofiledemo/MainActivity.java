@@ -311,6 +311,7 @@ public class MainActivity extends AppCompatActivity {
         bParams.putString("keystroke_send_control_chars_as_events", "true");   // Enable/disable sending control chars as events
         bParams.putString("keystroke_process_key_tag", "true");         // Enable/disable processing key tags
         bParams.putString("keystroke_special_key_event_delay", "200");  // Set special key event delay (ms)
+        bParams.putString("keystroke_character_delay", "100");   // Set inter-character delay (ms)
 
         // add the parameters to the configuration
         bConfig.putBundle("PARAM_LIST", bParams);
