@@ -6,7 +6,7 @@
 
 ## 演示环境
 
-- InfoWedge - v1.50
+- InfoWedge - v1.83
 - 设备 - C72 (Android13)
 - RFID 硬件版本 - v2.0.2
 - RFID 软件版本 - v6.1.8
@@ -116,7 +116,7 @@ private void configRfidItems() {
     bundleApp.putStringArray("ACTIVITY_LIST", new String[]{"*"}); // * 表示所有活动
     bMain.putParcelableArray("APP_LIST", new Bundle[]{bundleApp});
 
-    // 禁用扫码码输入插件
+    // 禁用条码输入插件
     Bundle bBarcodeConfig = new Bundle();
     bBarcodeConfig.putString("PLUGIN_NAME", "BARCODE");
     Bundle bBarcodeParams = new Bundle();
@@ -130,7 +130,11 @@ private void configRfidItems() {
     Bundle bRfidParams = new Bundle();
     bRfidParams.putString("rfid_input_enabled", "true");   // 启用 RFID
     bRfidParams.putString("rfid_trigger_keys", "LEFT_TRIGGER,CENTER_TRIGGER,RIGHT_TRIGGER,SCAN,GUN_TRIGGER");  // 触发键
+    bRfidParams.putString("rfid_custom_trigger_keys", "293,294"); // 自定义触发键
     bRfidParams.putString("rfid_beeper_enable", "true");    // 提示音
+    bRfidParams.putString("rfid_floating_widget_enable", "true"); // 启用悬浮标签显示组件
+    bRfidParams.putString("rfid_floating_widget_pos_x", "100"); // 悬浮标签显示组件 X 坐标
+    bRfidParams.putString("rfid_floating_widget_pos_y", "20"); // 悬浮标签显示组件 Y 坐标
     bRfidParams.putString("rfid_timed_output_interval", "200"); // 定时输出间隔
 
     bRfidParams.putString("rfid_filter_duplicate_tags", "true"); // 过滤重复标签
@@ -157,7 +161,7 @@ private void configRfidItems() {
             break;
         }
     }
-    bRfidParams.putString("rfid_trigger_mode", String.valueOf(triggerModeIndex));    // 触发模式，0-接住，1-连续
+    bRfidParams.putString("rfid_trigger_mode", String.valueOf(triggerModeIndex));    // 触发模式，0-立即，1-连续
 
     Spinner spinnerOutputMode = findViewById(R.id.spinner_tag_output_mode);
     int outputMode = spinnerOutputMode.getSelectedItemPosition();

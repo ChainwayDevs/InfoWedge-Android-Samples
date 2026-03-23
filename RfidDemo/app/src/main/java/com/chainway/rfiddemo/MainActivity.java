@@ -109,7 +109,11 @@ public class MainActivity extends AppCompatActivity {
         Bundle bRfidParams = new Bundle();
         bRfidParams.putString("rfid_input_enabled", "true");   // enable RFID
         bRfidParams.putString("rfid_trigger_keys", "LEFT_TRIGGER,CENTER_TRIGGER,RIGHT_TRIGGER,SCAN,GUN_TRIGGER");  // trigger keys
+        bRfidParams.putString("rfid_custom_trigger_keys", "293,294"); // custom trigger keys
         bRfidParams.putString("rfid_beeper_enable", "true");    // enable beeper
+        bRfidParams.putString("rfid_floating_widget_enable", "true"); // Enable floating tag display widget
+        bRfidParams.putString("rfid_floating_widget_pos_x", "100"); // Floating tag display widget X position
+        bRfidParams.putString("rfid_floating_widget_pos_y", "20"); // Floating tag display widget Y position
         bRfidParams.putString("rfid_timed_output_interval", "200"); // timed output interval
 
         bRfidParams.putString("rfid_filter_duplicate_tags", "true"); // filter duplicate tags

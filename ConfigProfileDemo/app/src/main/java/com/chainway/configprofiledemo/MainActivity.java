@@ -183,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
         bParams.putString("dcp_start_in", "BUTTON");    // start in mode: FULLSCREEN, BUTTON, BUTTON_ONLY
         bParams.putString("dcp_pos_x", "50"); // set the X coordinate of the floating button position, with the farthest right coordinate being 0
         bParams.putString("dcp_pos_y", "50"); // set the Y coordinate of the floating button position, with the bottommost coordinate being 0
+        bParams.putString("dcp_drag_detect_time", "200"); // Drag detect time (ms), range 0-1000
 
         // add the parameters to the configuration
         bConfig.putBundle("PARAM_LIST", bParams);
@@ -436,7 +437,7 @@ public class MainActivity extends AppCompatActivity {
         // send broadcast
         Intent i = new Intent();
         i.setAction("com.symbol.infowedge.api.ACTION");
-        i.putExtra("com.symbol.infowedge.api.SET_CONFIG", bMain);;
+        i.putExtra("com.symbol.infowedge.api.SET_CONFIG", bMain);
         i.putExtra("SEND_RESULT", "true");
         i.putExtra("COMMAND_IDENTIFIER", "SET_CLIPBOARD_OUTPUT");
         sendBroadcast(i);
@@ -468,7 +469,9 @@ public class MainActivity extends AppCompatActivity {
         bParams.putString("failure_audio", "true");     // play audio on failure
         bParams.putString("vibrate", "true");           // vibration on success
         bParams.putString("barcode_trigger_keys", "LEFT_TRIGGER,RIGHT_TRIGGER");  // trigger keys (comma separated)
+        bParams.putString("barcode_custom_trigger_keys", "293,294"); // Custom trigger key values, multiple keys separated by commas
         bParams.putString("barcode_trigger_mode", "2"); // key trigger mode: 0 - Press and Release, 1 - Press and Continue, 2 - Trigger, 3 - Timed Release
+        bParams.putString("barcode_continuous_scan_delay", "100");   // Continuous scan delay time (ms)
         bParams.putString("charset_name", "UTF-8");     // character set name: Auto，UTF-8，GBK，GB18030，ISO-8859-1，Shift_JIS
         bParams.putString("same_barcode_timeout", "1000"); // Same barcode timeout (ms)
         // Enable/Disable decoders
@@ -565,6 +568,7 @@ public class MainActivity extends AppCompatActivity {
         bBarcodeConfig.putString("RESET_CONFIG", "true");   // reset the barcode configuration to default first
         Bundle bBarcodeParams = new Bundle();
         bBarcodeParams.putString("barcode_trigger_mode", "1");  // key trigger mode: 0 - Press and Release, 1 - Press and Continue, 2 - Trigger, 3 - Timed Release
+        bBarcodeParams.putString("barcode_continuous_scan_delay", "100");   // Continuous scan delay time (ms)
         bBarcodeParams.putString("failure_audio", "true");      // play audio on failure
         bBarcodeParams.putString("vibrate", "true");            // vibration on success
         bBarcodeParams.putString("decoder_code11", "true");     // enable Code11

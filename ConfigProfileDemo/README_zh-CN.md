@@ -6,7 +6,7 @@
 
 ## 演示环境
 
-- InfoWedge - v1.71
+- InfoWedge - v1.83
 - 设备 - MC62
 - 扫描头 - SE4710
 
@@ -241,6 +241,7 @@ private void setConfigDcp() {
     bParams.putString("dcp_start_in", "BUTTON");    // 启动模式：FULLSCREEN，BUTTON，BUTTON_ONLY
     bParams.putString("dcp_pos_x", "50"); // 设置浮动按钮位置的 X 坐标，最右边的坐标为 0
     bParams.putString("dcp_pos_y", "50"); // 设置浮动按钮位置的 Y 坐标，最底部的坐标为 0
+    bParams.putString("dcp_drag_detect_time", "200"); // 拖动感测时间 (ms)，范围 0-1000
 
     // 将参数添加到配置中
     bConfig.putBundle("PARAM_LIST", bParams);
@@ -561,48 +562,47 @@ private void setBarcode() {
         return;
     }
 
-    // 主要参数
+    // 主参数设置
     Bundle bMain = new Bundle();
-    bMain.putString("PROFILE_NAME", profileName);   // 配置文件名称
-    bMain.putString("PROFILE_ENABLED", "true");     // 启用配置文件
-    bMain.putString("CONFIG_MODE", "UPDATE");       // 将配置与现有配置文件合并
+    bMain.putString("PROFILE_NAME", profileName);  // 配置文件名
+    bMain.putString("PROFILE_ENABLED", "true"); // 启用该配置文件
+    bMain.putString("CONFIG_MODE", "UPDATE");   // 将配置合并到已有的配置文件
 
-    // 设置条码配置
+    // 设置扫码头
     Bundle bConfig = new Bundle();
-    bConfig.putString("PLUGIN_NAME", "BARCODE");    // 插件名称
-    bConfig.putString("RESET_CONFIG", "true");      // 首先将条码配置重置为默认值
+    bConfig.putString("PLUGIN_NAME", "BARCODE");    // 设置类型：扫码头
+    bConfig.putString("RESET_CONFIG", "true");     // 重置原有扫码头配置
 
-    // 设置条码参数（如果使用默认值，则无需设置）
+    // 设置扫码头参数（若使用默认值的配置项，可不设置）
     Bundle bParams = new Bundle();
-    bParams.putString("barcode_enabled", "true");   // 启用扫码功能
-    bParams.putString("success_audio_type", "1");   // 成功音频提示：0 - 无，1 - 嘟，2 - 嘀
-    bParams.putString("failure_audio", "true");     // 扫描失败提示音
-    bParams.putString("vibrate", "true");           // 扫描振动提示
-    bParams.putString("barcode_trigger_mode", "2"); // 按键触发模式：0 - 单次扫码，1 - 连续扫码，2 - 按住扫码，3 - 瞄准扫码
-    bParams.putString("charset_name", "UTF-8");     // 字符集：Auto，UTF-8，GBK，GB18030，ISO-8859-1，Shift_JIS
+    bParams.putString("barcode_enabled", "true");   // 是否启用扫码头
+    bParams.putString("success_audio_type", "1");   // 扫码成功时播放提示音: 0 - 无, 1 - Du, 2 - Di
+    bParams.putString("failure_audio", "true");     // 扫码失败时播放提示音
+    bParams.putString("vibrate", "true");           // 扫码成功时是否震动提示
+    bParams.putString("barcode_trigger_keys", "LEFT_TRIGGER,RIGHT_TRIGGER");  // 触发扫码的按键，多个按键用逗号分隔
+    bParams.putString("barcode_custom_trigger_keys", "293,294"); // 自定义触发按键值，多个按键用逗号分隔
+    bParams.putString("barcode_trigger_mode", "2");   // 按键触发模式：0单次扫码，1连续扫码，2按住扫码，3瞄准扫码
+    bParams.putString("barcode_continuous_scan_delay", "100");   // 连续扫码延迟时间 (ms)
+    bParams.putString("charset_name", "UTF-8");   // 解码使用的数据集：Auto，UTF-8，GBK，GB18030，ISO-8859-1，Shift_JIS
     bParams.putString("same_barcode_timeout", "1000"); // 相同条码超时时间 (ms)
-    // Enable/Disable decoders
-    bParams.putString("decoder_code11", "true");    // 启用 Code11 解码器
-    bParams.putString("decoder_code128", "false");  // 禁用 Code128 解码器
-    // Enable/Disable/Restore default for all decoders
-    // bParams.putString("decoder_all_symbology", "true");      // 启用所有解码器
-    // bParams.putString("decoder_all_symbology", "false");     // 禁用所有解码器
-    // bParams.putString("decoder_all_symbology", "default");   // 恢复所有解码器为默认设置
-    // 设置解码器参数
-    bParams.putString("decoder_code128_length1", "1");  // 设置 Code128 解码器长度 1
-    bParams.putString("decoder_code128_length2", "40"); // 设置 Code128 解码器长度 2
-    bParams.putString("decoder_upca_report_check_digit", "true");   // 传输 UPC-A 校验位
-    bParams.putString("decoder_ean13_report_check_digit", "true");  // 传输 EAN-13 校验位
-
-    // 将参数添加到配置中
+    // 启用 / 禁用条码
+    bParams.putString("decoder_code11", "true");    // 启用 Code11 条码
+    bParams.putString("decoder_code128", "false");  // 禁用 Code128 条码
+    // 所有条码启用 / 禁用 / 恢复默认
+    // bParams.putString("decoder_all_symbology", "true");      // 所有条码启用
+    // bParams.putString("decoder_all_symbology", "false");     // 所有条码禁用
+    // bParams.putString("decoder_all_symbology", "default");   // 所有条码恢复默认设置
+    // 设置条码的参数
+    bParams.putString("decoder_code128_length1", "1");  // 设置 Code128 条码长度 1
+    bParams.putString("decoder_code128_length2", "40"); // 设置 Code128 条码长度 2
+    bParams.putString("decoder_upca_report_check_digit", "true");   // Transmit UPC-A Check Digit
+    bParams.putString("decoder_ean13_report_check_digit", "true");  // Transmit EAN-13 Check Digit
+    
+    // 添加到主参数设置中
     bConfig.putBundle("PARAM_LIST", bParams);
     bMain.putBundle("PLUGIN_CONFIG", bConfig);
 
     // 发送广播
-    bConfig.putBundle("PARAM_LIST", bParams);
-    bMain.putBundle("PLUGIN_CONFIG", bConfig);
-
-    // send broadcast
     Intent i = new Intent();
     i.setAction("com.symbol.infowedge.api.ACTION");
     i.putExtra("com.symbol.infowedge.api.SET_CONFIG", bMain);
@@ -693,6 +693,7 @@ private void setMultiConfig() {
     bBarcodeConfig.putString("RESET_CONFIG", "true");   // 首先将条码配置重置为默认值
     Bundle bBarcodeParams = new Bundle();
     bBarcodeParams.putString("barcode_trigger_mode", "1");  // 按键触发模式：0 - 单次扫码，1 - 连续扫码，2 - 按住扫码，3 - 瞄准扫码
+    bBarcodeParams.putString("barcode_continuous_scan_delay", "100");   // 连续扫码延迟时间 (ms)
     bBarcodeParams.putString("failure_audio", "true");      // 扫描失败提示音
     bBarcodeParams.putString("vibrate", "true");            // 扫描振动提示
     bBarcodeParams.putString("decoder_code11", "true");     // 启用 Code11
