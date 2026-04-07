@@ -22,20 +22,22 @@ This sample application demonstrates how to configure the InfoWedge profile usin
     - [Click the CREATE button to create a new profile.](#create-a-new-profile)
     - [Click the DELETE button to delete a specific profile.](#delete-a-specific-profile)
     - [Click the RESTORE button to restore the default InfoWedge settings.](#restore-the-default-settings)
-4. **Set the profile configurations**
+4. **Set settings**
+    - [Click the TRUE or FALSE button to set the InfoWedge parameters.](#set-settings)
+5. **Set the profile configurations**
     - [Click the MAIN button to set the main configurations.](#set-the-main-configurations)
     - [Click the DCP button to set the DCP parameters.](#set-the-dcp-parameters)
     - [Click the GS1 button to set the GS1 parameters.](#set-the-gs1-parameters)
     - [Click the BDF button to set the BDF parameters.](#set-the-bdf-parameters)
-5. **Set output configurations**
+6. **Set output configurations**
     - [Click the KEY button to set the keystroke output parameters.](#set-the-keystroke-output-parameters)
     - [Click the INT button to set the intent output parameters.](#set-the-intent-output-parameters)
     - [Click the IP button to set the ip output parameters.](#set-the-ip-output-parameters)
     - [Click the CLIP button to set the clipboard output parameters.](#set-the-clipboard-output-parameters)
-6. **Set barcode**
+7. **Set barcode**
     - [Click the BARCODE button to set the barcode parameters.](#set-the-barcode-parameters)
     - [Click the DECODER button to set the decoder parameters.](#set-the-decoder-parameters)
-7. **Set multiple configurations**
+8. **Set multiple configurations**
     - [Click the SET MULTI CONFIG button to set multiple configurations in one go.](#set-multiple-configurations)
 
 ## Sample code walk-through
@@ -89,6 +91,34 @@ This sample application demonstrates how to configure the InfoWedge profile usin
     ```
 
     ![result.png](./pics/result.png)
+
+### Set Settings
+
+Set the InfoWedge parameters.
+
+```java
+// send broadcast
+Intent i = new Intent();
+i.setAction("com.symbol.infowedge.api.ACTION");
+
+Bundle bSettings = new Bundle();
+bSettings.putString("logging_enabled", "true"); // enable logging
+bSettings.putString("anyconfig_code_enabled", "true"); // enable Anyconfig barcode configuration
+bSettings.putString("open_web_link_enabled", "true"); // enable open web link from barcode
+bSettings.putString("add_wifi_enabled", "true"); // enable add WiFi from barcode
+
+i.putExtra("com.symbol.infowedge.api.SET_SETTINGS", bSettings);
+sendBroadcast(i);
+```
+
+**Parameters description:**
+
+- **logging_enabled** - Whether to enable logging, the value is `"true"` or `"false"`
+- **anyconfig_code_enabled** - Whether to enable Anyconfig barcode configuration, the value is `"true"` or `"false"`
+- **open_web_link_enabled** - Whether to enable open web link from barcode, the value is `"true"` or `"false"`
+- **add_wifi_enabled** - Whether to enable add WiFi from barcode, the value is `"true"` or `"false"`
+
+![settings.png](./pics/settings.png) ![settings_iw1.png](./pics/settings_iw1.png) ![settings_iw2.png](./pics/settings_iw2.png)
 
 ### Manage profiles
 

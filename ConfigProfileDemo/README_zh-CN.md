@@ -6,7 +6,7 @@
 
 ## 演示环境
 
-- InfoWedge - v1.83
+- InfoWedge - v1.84
 - 设备 - MC62
 - 扫描头 - SE4710
 
@@ -22,20 +22,22 @@
     - [点击 CREATE 按钮创建一个新配置文件。](#创建一个新配置)
     - [点击 DELETE 按钮删除指定的配置文件。](#删除指定的配置)
     - [点击 RESTORE 按钮恢复 InfoWedge 默认设置。](#恢复默认设置)
-4. **设置配置文件参数**
+4. **设置 InfoWedge 参数**
+    - [点击 TRUE 或 FALSE 按钮设置 InfoWedge 参数。](#设置-infowedge-参数-set-settings)
+5. **设置配置文件参数**
     - [点击 MAIN 按钮设置主要配置。](#设置主要配置)
     - [点击 DCP 按钮设置 DCP 参数。](#设置-dcp-参数)
     - [点击 GS1 按钮设置 GS1 参数。](#设置-gs1-参数)
     - [点击 BDF 按钮设置 BDF 参数。](#设置-bdf-参数)
-5. **设置输出配置**
+6. **设置输出配置**
     - [点击 KEY 按钮设置按键输出参数。](#设置按键输出参数)
     - [点击 INT 按钮设置 Intent 输出参数。](#设置-intent-输出参数)
     - [点击 IP 按钮设置 IP 输出参数。](#设置-ip-输出参数)
     - [点击 CLIP 按钮设置剪贴板输出参数。](#设置剪贴板输出参数)
-6. **设置条码**
+7. **设置条码**
     - [点击 BARCODE 按钮设置条码参数。](#设置条码参数)
     - [点击 DECODER 按钮设置解码器参数。](#设置解码器参数)
-7. **设置多个配置**
+8. **设置多个配置**
     - [点击 SET MULTI CONFIG 按钮一次性设置多个配置。](#设置多个配置)
 
 ## 示例代码说明
@@ -89,6 +91,32 @@
     ```
 
     ![result.png](./pics/result.png)
+
+### 设置 InfoWedge 参数 （Set Settings）
+
+```java
+// 发送广播
+Intent i = new Intent();
+i.setAction("com.symbol.infowedge.api.ACTION");
+
+Bundle bSettings = new Bundle();
+bSettings.putString("logging_enabled", "true"); // 启用日志记录
+bSettings.putString("anyconfig_code_enabled", "true"); // 启用 Anyconfig 扫码配置
+bSettings.putString("open_web_link_enabled", "true"); // 启用扫码打开网页链接
+bSettings.putString("add_wifi_enabled", "true"); // 启用扫码添加 WiFi
+
+i.putExtra("com.symbol.infowedge.api.SET_SETTINGS", bSettings);
+sendBroadcast(i);
+```
+
+**参数说明：**
+
+- **logging_enabled** - 是否启用日志记录，取值为 `"true"` 或 `"false"`
+- **anyconfig_code_enabled** - 是否启用 Anyconfig 扫码配置，取值为 `"true"` 或 `"false"`
+- **open_web_link_enabled** - 是否启用扫码打开网页链接，取值为 `"true"` 或 `"false"`
+- **add_wifi_enabled** - 是否启用扫码添加 WiFi，取值为 `"true"` 或 `"false"`
+
+![settings.png](./pics/settings.png) ![settings_iw1.png](./pics/settings_iw1.png) ![settings_iw2.png](./pics/settings_iw2.png)
 
 ### 管理配置文件
 

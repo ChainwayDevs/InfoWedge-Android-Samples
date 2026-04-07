@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_set_barcode).setOnClickListener(v -> setBarcode());
         findViewById(R.id.button_set_decoder).setOnClickListener(v -> setDecoder());
 
+        findViewById(R.id.button_set_settings_true).setOnClickListener(v -> setSettings("true"));
+        findViewById(R.id.button_set_settings_false).setOnClickListener(v -> setSettings("false"));
+
         findViewById(R.id.button_set_multi_config).setOnClickListener(v -> setMultiConfig());
 
         // register broadcast receiver and filter results
@@ -538,6 +541,23 @@ public class MainActivity extends AppCompatActivity {
         i.putExtra("com.symbol.infowedge.api.SET_CONFIG", bMain);
         i.putExtra("SEND_RESULT", "true");
         i.putExtra("COMMAND_IDENTIFIER", "SET_DECODER");
+        sendBroadcast(i);
+    }
+
+    // set InfoWedge parameters
+    private void setSettings(String value) {
+        Intent i = new Intent();
+        i.setAction("com.symbol.infowedge.api.ACTION");
+
+        Bundle bSettings = new Bundle();
+        bSettings.putString("logging_enabled", value); // enable logging
+        bSettings.putString("anyconfig_code_enabled", value); // enable Anyconfig barcode configuration
+        bSettings.putString("open_web_link_enabled", value); // enable open web link from barcode
+        bSettings.putString("add_wifi_enabled", value); // enable add WiFi from barcode
+
+        i.putExtra("com.symbol.infowedge.api.SET_SETTINGS", bSettings);
+        i.putExtra("SEND_RESULT", "true");
+        i.putExtra("COMMAND_IDENTIFIER", "SET_SETTINGS");
         sendBroadcast(i);
     }
 
